@@ -2,6 +2,10 @@
 while :
 do
 clear
+echo "###############################################################################"
+echo "# Creado por kmilo0327 para la facilitacion de levantamiento de mundos        #"
+echo "###############################################################################"
+echo "#"
 echo Bienvenid@ al administrador de servidores
 echo ¿Que desea hacer?
 echo "1) Agregar usuario"
