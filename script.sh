@@ -173,7 +173,7 @@ file="/home/milo/minecraft/$usuario/${usuario}.puerto.txt"
 port=$(cat "$file")
 echo "El puerto es $port"
 sudo ufw deny from any to 192.168.0.251 port $port
-sudo mkdir /home/Respaldo/$usuario
+sudo mkdir /home/milo/Respaldo/$usuario
 sudo rm -rf /home/milo/Papelera$usuario
 sudo mv -f /home/milo/minecraft/$usuario /home/milo/Respaldo/$usuario
 sudo mv -f /lib/systemd/system/${usuario}.service /home/Respaldo/$usuario
