@@ -28,7 +28,7 @@ case $opcion in
 echo "Agregar usuario";
 echo -n "Escribe usuario:"
 read usuario;
-sudo mkdir /home/milo/minecraft/$usuario ;
+sudo mkdir -p /home/milo/minecraft/$usuario ;
 sudo chown milo:milo /home/milo/minecraft/$usuario ;
 sudo touch /lib/systemd/system/${usuario}.service ;
 echo "
