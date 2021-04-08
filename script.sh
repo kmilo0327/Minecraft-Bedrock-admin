@@ -24,33 +24,34 @@ case $opcion in
 #Also make a systemd service, you can start, stop a restar the service from systemctl
 #Note: You need to change all users "milo" for your own Linux user, i´m working on it
 
-1) clear
+1) 
+clear
 echo "Agregar usuario";
 echo -n "Escribe usuario:"
 read usuario;
 sudo apt install unzip -y
 sudo mkdir -p /home/milo/minecraft/$usuario ;
-sudo chown milo:milo /home/milo/minecraft/$usuario ;
 sudo touch /lib/systemd/system/${usuario}.service ;
-echo "
+sudo echo "
 [Unit]
 Description=$usuario Minecraft Service
 After=network.target
-
 [Service]
 #Type=Simple
 User=milo
 WorkingDirectory=/home/milo/minecraft/$usuario/
 ExecStart=/bin/sh -c 'LD_LIBRARY_PATH=. ./${usuario}_server '
 Restart=on-failure
-
 [Install]
 WantedBy=multi-user.target " > /lib/systemd/system/${usuario}.service ;
 
 sudo unzip bedrock-server-* -d /home/milo/minecraft/$usuario ;
 sudo mv /home/milo/minecraft/$usuario/bedrock_server /home/milo/minecraft/$usuario/${usuario}_server
+sudo chmod 700 /home/milo/minecraft/$usuario/${usuario}_server
 sudo rm -rf /home/milo/minecraft/$usuario/server.properties;
 sudo touch /home/milo/minecraft/$usuario/server.properties;
+sudo chown milo:milo /home/milo/minecraft/$usuario ;
+sudo chown milo:milo /home/milo/minecraft/${usuario}/* ;
 
 #This section, make a rule on the firewall, the range of ports is between 10000 to 19999 and it is random number
 #You need to allow this range port on your router.
@@ -79,23 +80,16 @@ allow-cheats=false
 max-players=$personas
 online-mode=true
 white-list=false
-
 server-port=$puerto
 server-portv6=$puertov6
-
 view-distance=16
-
 tick-distance=4
 player-idle-timeout=30
 max-threads=4
 level-name=$usuario level
-
-
 level-seed=$semilla
-
 default-player-permission-level=member
 # Allowed values: "visitor", "member", "operator"
-
 texturepack-required=false
 content-log-file-enabled=false
 compression-threshold=1
@@ -117,7 +111,7 @@ sleep 10
 clear;
 echo "**********Datos del servidor*******"
 echo "*IP Servidor: juegatelag.tk       *"
-echo "*puerto: $puerto                  *"
+echo "*puerto: $puerto					*"
 echo "***********************************"
 read -p "Presiona una tecla para continuar"
 echo "El servidor esta actualmente"
@@ -174,10 +168,10 @@ file="/home/milo/minecraft/$usuario/${usuario}.puerto.txt"
 port=$(cat "$file")
 echo "El puerto es $port"
 sudo ufw deny from any to 192.168.0.251 port $port
-sudo mkdir /home/milo/Respaldo/$usuario
-sudo rm -rf /home/milo/Papelera$usuario
+sudo mkdir -p /home/milo/Respaldo/$usuario
+sudo rm -rf /home/milo/Papelera/$usuario
 sudo mv -f /home/milo/minecraft/$usuario /home/milo/Respaldo/$usuario
-sudo mv -f /lib/systemd/system/${usuario}.service /home/Respaldo/$usuario
+sudo mv -f /lib/systemd/system/${usuario}.service /home/milo/Respaldo/$usuario
 echo "Datos eliminado"
 read -p "Presiona para continuar" ;;
 
